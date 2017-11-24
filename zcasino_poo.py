@@ -12,7 +12,11 @@ class Player:
 		while not ok:
 			self.choice = int(input("Saisissez un nombre entre '0 et 49' (ex.30): "))
 			if self.choice < 0 or self.choice > 49:
-				self.choice = print("Vous avez saisie un nombre inférieur ou supérieur à la plage.\n")
+                                # -tc- attention, print() ^ne retourne rien! Ne
+                                # pas affecter la valeur de retourn print() à
+                                # self.choice.
+				# self.choice = print("Vous avez saisie un nombre inférieur ou supérieur à la plage.\n")
+				print("Vous avez saisie un nombre inférieur ou supérieur à la plage.\n")
 			else:
 				ok = True
 		return self.choice
@@ -23,7 +27,11 @@ class Player:
 		while not ok:
 			self.bet = int(input("Saisissez la valeur de votre mise (ex.99): "))
 			if self.bet > self.wallet:
-				self.bet = print("La valeur de votre mise ne peut être plus grande que votre bourse.\n")
+                                # -tc- Même remarque que plus haut. Ne pas
+                                # affecteur la valeur de retour de print() à
+                                # self.choice
+				# self.bet = print("La valeur de votre mise ne peut être plus grande que votre bourse.\n")
+				print("La valeur de votre mise ne peut être plus grande que votre bourse.\n")
 			else:
 				ok = True
 		return self.bet
@@ -48,20 +56,30 @@ class GameTray:
 		# boucle de jeu
 		end = False
 		while not end:
-			money = self.player.wallet
+			# -tc- la variable money est responsable de ton problème. A
+                        # chaque tour de boucle, elle est réinitialisée à 0
+                        # money = self.player.wallet
 			choice = self.player.choose()
 			bid_on = self.player.bet()
 			returned_number = self.show_rand_numb()
+                        # -tc- les parenthèses sur les conditions ne sont pas
+                        # nécessaires
 			if (returned_number == choice):
 				bid_on = bid_on * 3
-				money = money + bid_on
+                                # -tc- Ici, on manipule directement la valeur
+                                # de self.player.wallet
+				self.player.wallet += bid_on
 				print("Super !!!!\nMise : + {} $    -    Bourse : {} $".format(bid_on, money))
 			elif (returned_number % 2 == choice % 2 and returned_number % 1 == choice % 1):
 				bid_on = bid_on + (bid_on / 2)
-				money = money + bid_on
+                                # -tc- Ici, on manipule directement la valeur
+                                # de self.player.wallet
+				self.player.wallet += bid_on
 				print("Pas Mal !!\nMise : + {} $    -    Bourse : {} $".format(bid_on, money))
 			else:
-				money = money - bid_on
+                                # Ici, on manipule directement la valeur de
+                                # self.player.wallet
+			        self.player.waller -= bid_on
 				print("Dommage...\nMise : - {} $    -    Bourse : {} $".format(bid_on, money))
 			end = self.player.want_to_quit()
 
