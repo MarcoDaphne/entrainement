@@ -3,7 +3,15 @@ import random
 import math
 
 class Player:
+	""" 
+	-tc- N'hésite pas à commenter systématiquement tes classes et 
+	tes méthodes de cette manière.
+	"""
 	def __init__(self, wallet):
+		""" 
+		-tc- Comme pour la méthode want_to_quit, prend l'habitude d'ajouter
+		un petit commentaire.
+		"""
 		self.wallet = wallet
 
 	def want_to_quit(self):
@@ -11,8 +19,16 @@ class Player:
 		answer = input('Voulez-vous vous retirer ? (y/n)')
 		return True if answer == 'y' else False
 
+# -tc- Attention à ne pas mélanger les langues. La classe Player est en anglais
+# -tc- tandis que la classe Croupier est en français
 class Croupier:
+	"""
+	-tc- Documenter la classe avec une petite description
+	"""
 	def __init__(self, purse):
+		""" 
+		-tc- Documenter toutes les méthodes.
+		"""
 		self.purse = purse
 
 	def get_choice(self):
@@ -37,6 +53,7 @@ class Croupier:
 				ok = True
 		return self.bet
 
+	# -tc- Très bien!
 	def winnings(self):
 		"""Method calculating 3 times the bet and returning the earnings"""
 		money = self.purse.wallet
@@ -95,15 +112,22 @@ class GameTray:
 			choice = self.croupier.get_choice()
 			bid_on = self.croupier.get_bid_on()
 			returned_number = self.show_rand_numb()
+			# -tc- Ici, les parenthèses ne sont pas nécessaire et limitent selon
+			# -tc- moi la lisibilité
 			if (returned_number == choice):
+				# -tc- la méthode winnings ne met pas à jour le wallet du player
 				self.croupier.winnings()
 			elif (returned_number % 2 == choice % 2 and returned_number % 1 == choice % 1):
+				# -tc- la méthode earnings ne met pas à jour le wallet du player
 				self.croupier.earnings()
 			else:
+				# -tc- la méthode losses ne met pas à jour le wallet du player
 				self.croupier.losses()
 			end = self.player.want_to_quit()
 
 
+# -tc- Bien!
+# -tc- Bien!
 def main():
 	print("""
 Bienvenue !!!
